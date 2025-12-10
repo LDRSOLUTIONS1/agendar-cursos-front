@@ -2,7 +2,7 @@ import {
   GET_COUNT_CATEGORIAS,
   GET_COUNT_COURSE,
   GET_COUNT_RESERVATION,
-  GET_COUNT_USER,
+  GET_COUNT_MODELS,
 } from "../../types";
 
 const GraficasReducer = (state, action) => {
@@ -25,10 +25,10 @@ const GraficasReducer = (state, action) => {
         total_reservartion: action.payload,
         ErrorsAPI: [],
       };
-    case GET_COUNT_USER:
+    case GET_COUNT_MODELS:
       return {
         ...state,
-        total_users: action.payload,
+        total_models: action.payload,
         ErrorsAPI: [],
       };
     default:

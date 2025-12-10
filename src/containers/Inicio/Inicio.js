@@ -63,26 +63,26 @@ const Inicio = () => {
     total_categories,
     total_course,
     total_reservartion,
-    total_users,
+    total_models,
 
     CountCategories,
     CountCourse,
     CountReservation,
-    CountUser,
+    countModels,
   } = useContext(GraficasContext);
 
   useEffect(() => {
     CountCategories();
     CountCourse();
     CountReservation();
-    CountUser();
+    countModels();
   }, []);
 
   const dataValues = [
     total_categories,
     total_course,
     total_reservartion,
-    total_users,
+    total_models,
   ].map((v) => v || 0);
 
   return (
@@ -160,7 +160,7 @@ const Inicio = () => {
             }}
           >
             <Graphics
-              labels={["Categorías", "Cursos", "Reservaciones", "Usuarios"]}
+              labels={["Categorías", "Cursos", "Reservaciones", "Modelos"]}
               dataValues={dataValues}
             />
           </Box>
@@ -177,7 +177,7 @@ const Inicio = () => {
             }}
           >
             <GraphicsDona
-              labels={["Categorías", "Cursos", "Reservaciones", "Usuarios"]}
+              labels={["Categorías", "Cursos", "Reservaciones", "Modelos"]}
               dataValues={dataValues}
             />
           </Box>
