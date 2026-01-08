@@ -79,11 +79,11 @@ export default function EditCursos({ open, handleClose, id, categorias }) {
                   label="Descripción del curso"
                   defaultValue={course.description}
                   multiline
-                  rows={4}
+                  rows={8}
                   {...register("description", {
                     required: "La descripción es obligatoria",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                    maxLength: { value: 500, message: "Máximo 500 caracteres" },
+                    maxLength: { value: 1000, message: "Máximo 1000 caracteres" },
                   })}
                   error={!!errors.description}
                   helperText={errors.description?.message}

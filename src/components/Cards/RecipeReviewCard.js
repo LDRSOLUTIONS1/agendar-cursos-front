@@ -168,7 +168,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
           )
         }
         title={
-          <Typography variant="h6" noWrap>
+          <Typography variant="subtitle1" gutterBottom>
             {curso.title}
           </Typography>
         }
@@ -213,9 +213,11 @@ export default function RecipeReviewCard({ curso, categorias }) {
           <Typography variant="body2" color="text.secondary">
             Duración: {curso.duration}
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Modelo: {curso.models.nombre_tipo_unidad}
+          </Typography>
         </CardContent>
       </Link>
-
       <CardActions disableSpacing>
         {type_user === "1" && (
           <>
@@ -333,7 +335,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
           )}
         </CardContent>
       </Collapse>
-
       {id_user !== null && (
         <ModalMultimedia
           open={modalMultimedia}

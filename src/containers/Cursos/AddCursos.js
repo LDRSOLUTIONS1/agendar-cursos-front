@@ -102,11 +102,11 @@ export default function AddCursos({ modal, handleClose, categorias, modelos }) {
                 fullWidth
                 label="Descripción del curso"
                 multiline
-                rows={4}
+                rows={8}
                 {...register("description", {
                   required: "La descripción es obligatoria",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 500, message: "Máximo 500 caracteres" },
+                  maxLength: { value: 1000, message: "Máximo 1000 caracteres" },
                 })}
                 error={!!errors.description}
                 helperText={errors.description?.message}
@@ -164,7 +164,7 @@ export default function AddCursos({ modal, handleClose, categorias, modelos }) {
                 label="Modalidad del curso"
                 defaultValue=""
                 {...register("modality", {
-                  required: "Selecciona una modalidad ", 
+                  required: "Selecciona una modalidad ",
                 })}
                 error={!!errors.modality}
                 helperText={errors.modality?.message}
