@@ -158,7 +158,9 @@ export default function VistaCursos(props) {
 
               <Grid item xs={12} sx={{ mb: 2 }}>
                 {curso.status !== 2 &&
-                  (type_user === "1" || type_user === "3") && (
+                  (type_user === "1" ||
+                    type_user === "3" ||
+                    type_user === "7") && (
                     <Button
                       onClick={() => {
                         if (type_user === "1") {
@@ -272,12 +274,12 @@ export default function VistaCursos(props) {
                                 {r.status === 1
                                   ? "Pendiente de Confirmación"
                                   : r.status === 2
-                                  ? "Reservación Confirmada"
-                                  : r.status === 3
-                                  ? "Reservación Cancelada"
-                                  : r.status === 4
-                                  ? "Reservación Realizada"
-                                  : "Otro"}
+                                    ? "Reservación Confirmada"
+                                    : r.status === 3
+                                      ? "Reservación Cancelada"
+                                      : r.status === 4
+                                        ? "Reservación Realizada"
+                                        : "Otro"}
                               </strong>
                             </Typography>
                           ))}

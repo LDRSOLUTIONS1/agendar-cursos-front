@@ -15,7 +15,7 @@ const Calendario = () => {
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
-        {(type_user === "1" || type_user === "2" || type_user === "3") && (
+        {(type_user === "1" || type_user === "2" || type_user === "3" || type_user === "7") && (
           <Grid item xs={12}>
             <Typography
               fontWeight="bold"

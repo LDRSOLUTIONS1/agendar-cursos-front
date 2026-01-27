@@ -107,7 +107,7 @@ export default function Header({ children }) {
   const { cerrarSesion } = React.useContext(AuthContext);
   const { agendasCount, GetAgendasCount } = React.useContext(AgendaContext);
   const { cursos, GetCursosFavoritos } = React.useContext(
-    CursosFavoritosContext
+    CursosFavoritosContext,
   );
 
   const type_user = localStorage.getItem("type_user");
@@ -118,10 +118,10 @@ export default function Header({ children }) {
     type_user === "1"
       ? `${baseUrl}/storage/Manuales/PicAdmin.pdf`
       : type_user === "2"
-      ? `${baseUrl}/storage/Manuales/PicInstructor.pdf`
-      : type_user === "6"
-      ? `${baseUrl}/storage/Manuales/PicSubAdmin.pdf`
-      : `${baseUrl}/storage/Manuales/PicCliente.pdf`;
+        ? `${baseUrl}/storage/Manuales/PicInstructor.pdf`
+        : type_user === "6"
+          ? `${baseUrl}/storage/Manuales/PicSubAdmin.pdf`
+          : `${baseUrl}/storage/Manuales/PicCliente.pdf`;
 
   React.useEffect(() => {
     GetAgendasCount();
@@ -328,28 +328,32 @@ export default function Header({ children }) {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() =>
-                (window.location.href =
-                  "https://ldrhsys.ldrhumanresources.com/Cliente/interfaces/Inicio.php?resultado=ingreso")
-              }
-            >
-              <ListItemIcon>
-                <KeyboardReturnIcon />
-              </ListItemIcon>
-              <ListItemText primary="Regresar" />
-            </ListItemButton>
-          </ListItem>
+          {type_user !== "3" && (
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() =>
+                  (window.location.href =
+                    "https://ldrhsys.ldrhumanresources.com/Cliente/interfaces/Inicio.php?resultado=ingreso")
+                }
+              >
+                <ListItemIcon>
+                  <KeyboardReturnIcon />
+                </ListItemIcon>
+                <ListItemText primary="Regresar" />
+              </ListItemButton>
+            </ListItem>
+          )}
 
-          <ListItem disablePadding>
-            <ListItemButton onClick={cerrarSesion}>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Cerrar sesión" sx={{ color: "#000" }} />
-            </ListItemButton>
-          </ListItem>
+          {type_user === "3" && (
+            <ListItem disablePadding>
+              <ListItemButton onClick={cerrarSesion}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Cerrar sesión" sx={{ color: "#000" }} />
+              </ListItemButton>
+            </ListItem>
+          )}
         </Box>
       </Drawer>
 

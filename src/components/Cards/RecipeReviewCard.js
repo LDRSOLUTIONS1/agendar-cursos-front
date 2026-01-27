@@ -118,8 +118,8 @@ export default function RecipeReviewCard({ curso, categorias }) {
     curso.status === 1
       ? "Activo"
       : curso.status === 2
-      ? "Inactivo"
-      : "Desconocido";
+        ? "Inactivo"
+        : "Desconocido";
 
   return (
     <Card
@@ -146,7 +146,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
           </Avatar>
         }
         action={
-          type_user === "3" && (
+          (type_user === "3" || type_user === "7") && (
             <IconButton
               size="small"
               onClick={() => handleToggleFavorito(curso)}
@@ -319,7 +319,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
               Agendar este curso
             </Button>
           )}
-          {curso.status !== 2 && type_user === "3" && (
+          {(type_user === "3" || type_user === "7") && curso.status !== 2 && (
             <Button
               onClick={() => handleOpenAgendaClient(curso.id, curso.user_id)}
               fullWidth

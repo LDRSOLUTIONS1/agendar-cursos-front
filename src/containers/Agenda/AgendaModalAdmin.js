@@ -116,18 +116,29 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
                         newValue.hour(value.hour()).minute(value.minute())
                       )
                     }
-                    shouldDisableDate={(date) => {
-                      const today = dayjs();
-                      const day = date.day();
-                      const isPastDate = date.isBefore(today, "day");
+                    // shouldDisableDate={(date) => {
+                    //   const today = dayjs();
+                    //   const day = date.day();
+                    //   const isPastDate = date.isBefore(today, "day");
 
+                    //   const alreadyThree = countEventsByDate(date) >= 6;
+
+                    //   if (Number(type_user) === 1) {
+                    //     return isPastDate || alreadyThree;
+                    //   } else {
+                    //     const isWeekend = day === 0 || day === 6;
+                    //     return isWeekend || isPastDate || alreadyThree;
+                    //   }
+                    // }}
+                    shouldDisableDate={(date) => {
+                      const day = date.day();
                       const alreadyThree = countEventsByDate(date) >= 6;
 
                       if (Number(type_user) === 1) {
-                        return isPastDate || alreadyThree;
+                        return alreadyThree;
                       } else {
                         const isWeekend = day === 0 || day === 6;
-                        return isWeekend || isPastDate || alreadyThree;
+                        return isWeekend || alreadyThree;
                       }
                     }}
                   />

@@ -10,10 +10,8 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
 import Logo from "../layout/img/FOTON.png";
-import AuthContext from "../../context/Auth/AuthContext";
 import Noresultados from "./gif/404.gif";
 
 const drawerWidth = 240;
@@ -37,7 +35,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const NoResultados = () => {
-  const { cerrarSesion } = React.useContext(AuthContext);
   const [open] = React.useState(false);
 
   return (
@@ -66,21 +63,6 @@ const NoResultados = () => {
                 objectFit: "contain",
               }}
             />
-          </Box>
-
-          <Box sx={{ marginLeft: "auto" }}>
-            <Tooltip title="Cerrar sesión">
-              <IconButton onClick={() => cerrarSesion()}>
-                <ExitToAppIcon
-                  sx={{
-                    color: "black",
-                    fontSize: 25,
-                    transition: "0.2s",
-                    "&:hover": { scale: "2" },
-                  }}
-                />
-              </IconButton>
-            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>

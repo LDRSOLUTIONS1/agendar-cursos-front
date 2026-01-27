@@ -76,6 +76,7 @@ const Cursos = () => {
     1: "Cursos",
     2: "Mis cursos instructor",
     3: "Todos los cursos",
+    7: "Todos los cursos",
   };
 
   const cursosActivos = cursos.filter((c) => c.status === 1);
