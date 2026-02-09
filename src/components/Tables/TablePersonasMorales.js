@@ -59,7 +59,7 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TablePersonasMorales({ users }) {
+export default function TablePersonasMorales({ users, categorias }) {
   const { DeleteUsersMorales } = useContext(UsuariosContext);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
@@ -176,6 +176,7 @@ export default function TablePersonasMorales({ users }) {
           open={modalUpdate}
           handleClose={handleClickClose}
           id={id_service}
+          categorias={categorias}
         />
       )}
     </>

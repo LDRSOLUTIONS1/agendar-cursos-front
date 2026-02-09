@@ -53,7 +53,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
+export default function AddPersonasFisicas({ modal, handleCloseFisica, categorias }) {
   const { AddPersonaFisicas } = React.useContext(UsuariosContext);
 
   const {
@@ -136,7 +136,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 fullWidth
                 label="Apellido paterno"
                 {...register("first_last_name", {
-                  required: "El apellido paterno es obligatorio",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
@@ -149,7 +148,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 fullWidth
                 label="Apellido materno"
                 {...register("second_last_name", {
-                  required: "El apellido materno es obligatorio",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
@@ -164,7 +162,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 label="Fecha de nacimiento"
                 InputLabelProps={{ shrink: true }}
                 {...register("birth_date", {
-                  required: "La fecha de nacimiento es obligatoria",
                   maxLength: { value: 255, message: "Máximo 255 caracteres" },
                 })}
                 error={!!errors.birth_date}
@@ -176,7 +173,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 fullWidth
                 label="CURP"
                 {...register("curp", {
-                  required: "La CURP es obligatoria",
                   pattern: {
                     value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
                     message: "CURP inválida",
@@ -197,7 +193,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 fullWidth
                 label="RFC"
                 {...register("rfc", {
-                  required: "El RFC es obligatorio",
                   pattern: {
                     value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                     message: "RFC inválido",
@@ -254,9 +249,31 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                   <em>-- Selecciona --</em>
                 </MenuItem>
                 <MenuItem value={1}>Administrador</MenuItem>
-                <MenuItem value={2}>Instructor</MenuItem>
+                <MenuItem value={2}>Instructor</MenuItem> 
                 <MenuItem value={3}>Cliente</MenuItem>
-                <MenuItem value={6}>Subadministrador</MenuItem>
+                <MenuItem value={6}>Subadministrador</MenuItem> 
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                select
+                fullWidth
+                label="Selecciona una categoría"
+                defaultValue=""
+                {...register("category_id", {
+                  required: "Debes seleccionar una categoría",
+                })}
+                error={!!errors.category_id}
+                helperText={errors.category_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona una categoría -</em>
+                </MenuItem>
+                {categorias.map((categoria) => (
+                  <MenuItem key={categoria.id} value={categoria.id}>
+                    {categoria.name}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -288,7 +305,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 helperText={errors?.password?.message}
                 {...register("password", {
                   required: {
-                    value: true,
+                    value: false,
                     message: "La contraseña es requerida",
                   },
                   minLength: {
@@ -332,7 +349,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 helperText={errors?.password_confirmation?.message}
                 {...register("password_confirmation", {
                   required: {
-                    value: true,
+                    value: false,
                     message: "Es requerido confirmar la contraseña",
                   },
                   minLength: {

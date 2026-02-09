@@ -9,6 +9,7 @@ import AddPersonasFisicas from "./AddPersonasFisicas";
 import AddPersonasMorales from "./AddPersonasMorales";
 import AddIcon from "@mui/icons-material/Add";
 import { motion } from "framer-motion";
+import CategoriasContext from "../../context/Categorias/CategoriasContext";
 function CustomTabPanel({ children, value, index, ...other }) {
   return (
     <div
@@ -40,6 +41,8 @@ export default function Usuarios() {
   const { usersFisicos, GetUsersFisicos, usersMorales, GetUsersMorales } =
     useContext(UsuariosContext);
 
+  const { categorias, GetCategories } = React.useContext(CategoriasContext);
+
   const [tabValue, setTabValue] = useState(0);
   const [openFisica, setOpenFisica] = useState(false);
   const [openMoral, setOpenMoral] = useState(false);
@@ -53,11 +56,17 @@ export default function Usuarios() {
   useEffect(() => {
     GetUsersFisicos();
     GetUsersMorales();
+    GetCategories();
   }, []);
 
   const renderTable = () => {
-    if (tabValue === 0) return <TablePersonasFisicas users={usersFisicos} />;
-    return <TablePersonasMorales users={usersMorales} />;
+    if (tabValue === 0)
+      return (
+        <TablePersonasFisicas users={usersFisicos} categorias={categorias} />
+      );
+    return (
+      <TablePersonasMorales users={usersMorales} categorias={categorias} />
+    );
   };
 
   return (
@@ -131,11 +140,13 @@ export default function Usuarios() {
         modal={openFisica}
         handleCloseFisica={handleCloseFisica}
         users={usersFisicos}
+        categorias={categorias}
       />
       <AddPersonasMorales
         modal={openMoral}
         handleCloseMoral={handleCloseMoral}
         users={usersMorales}
+        categorias={categorias}
       />
     </Layout>
   );

@@ -59,7 +59,7 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TablePersonasFisicas({ users }) {
+export default function TablePersonasFisicas({ users, categorias }) {
   const { DeleteUsersFisicos } = useContext(UsuariosContext);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
@@ -178,6 +178,7 @@ export default function TablePersonasFisicas({ users }) {
           open={modalUpdate}
           handleClose={handleClickClose}
           id={id_service}
+          categorias={categorias}
         />
       )}
     </>

@@ -53,7 +53,11 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddPersonasMorales({ modal, handleCloseMoral }) {
+export default function AddPersonasMorales({
+  modal,
+  handleCloseMoral,
+  categorias,
+}) {
   const { AddPersonaMorales } = React.useContext(UsuariosContext);
 
   const {
@@ -129,7 +133,6 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 fullWidth
                 label="RFC"
                 {...register("rfc", {
-                  required: "El RFC es obligatorio",
                   pattern: {
                     value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                     message: "RFC inválido",
@@ -150,7 +153,6 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 fullWidth
                 label="Representante legal"
                 {...register("representante_legal", {
-                  required: "El representante legal es obligatorio",
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
                 error={!!errors.representante_legal}
@@ -162,7 +164,6 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 fullWidth
                 label="Domicilio fiscal"
                 {...register("domicilio_fiscal", {
-                  required: "El domicilio fiscal es obligatorio",
                   maxLength: { value: 200, message: "Máximo 200 caracteres" },
                 })}
                 error={!!errors.domicilio_fiscal}
@@ -211,7 +212,29 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 <MenuItem value={1}>Administrador</MenuItem>
                 <MenuItem value={2}>Instructor</MenuItem>
                 <MenuItem value={3}>Cliente</MenuItem>
-                <MenuItem value={6}>Subadministrador</MenuItem>
+                <MenuItem value={6}>Subadministrador</MenuItem> 
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                select
+                fullWidth
+                label="Selecciona una categoría"
+                defaultValue=""
+                {...register("category_id", {
+                  required: "Debes seleccionar una categoría",
+                })}
+                error={!!errors.category_id}
+                helperText={errors.category_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona una categoría -</em>
+                </MenuItem>
+                {categorias.map((categoria) => (
+                  <MenuItem key={categoria.id} value={categoria.id}>
+                    {categoria.name}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -243,7 +266,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 helperText={errors?.password?.message}
                 {...register("password", {
                   required: {
-                    value: true,
+                    value: false,
                     message: "La contraseña es requerida",
                   },
                   minLength: {
@@ -287,7 +310,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 helperText={errors?.password_confirmation?.message}
                 {...register("password_confirmation", {
                   required: {
-                    value: true,
+                    value: false,
                     message: "Es requerido confirmar la contraseña",
                   },
                   minLength: {
