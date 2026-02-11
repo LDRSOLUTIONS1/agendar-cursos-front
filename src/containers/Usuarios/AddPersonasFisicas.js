@@ -53,7 +53,11 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddPersonasFisicas({ modal, handleCloseFisica, categorias }) {
+export default function AddPersonasFisicas({
+  modal,
+  handleCloseFisica,
+  categorias,
+}) {
   const { AddPersonaFisicas } = React.useContext(UsuariosContext);
 
   const {
@@ -214,7 +218,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica, categoria
                 fullWidth
                 label="Correo electrónico"
                 {...register("email", {
-                  required: "El correo es obligatorio",
                   pattern: { value: /^\S+@\S+$/i, message: "Correo inválido" },
                 })}
                 error={!!errors.email}
@@ -227,7 +230,6 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica, categoria
                 fullWidth
                 label="Teléfono"
                 {...register("phone", {
-                  required: "El teléfono es obligatorio",
                   minLength: { value: 10, message: "Mínimo 10 caracteres" },
                   maxLength: { value: 15, message: "Máximo 15 caracteres" },
                 })}
@@ -249,9 +251,9 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica, categoria
                   <em>-- Selecciona --</em>
                 </MenuItem>
                 <MenuItem value={1}>Administrador</MenuItem>
-                <MenuItem value={2}>Instructor</MenuItem> 
+                <MenuItem value={2}>Instructor</MenuItem>
                 <MenuItem value={3}>Cliente</MenuItem>
-                <MenuItem value={6}>Subadministrador</MenuItem> 
+                <MenuItem value={6}>Subadministrador</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12}>

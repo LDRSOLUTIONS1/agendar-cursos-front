@@ -176,7 +176,6 @@ export default function AddPersonasMorales({
                 fullWidth
                 label="Correo electrónico"
                 {...register("email", {
-                  required: "El correo electrónico es obligatorio",
                   pattern: { value: /^\S+@\S+$/i, message: "Correo inválido" },
                 })}
                 error={!!errors.email}
@@ -189,7 +188,6 @@ export default function AddPersonasMorales({
                 fullWidth
                 label="Teléfono"
                 {...register("phone", {
-                  required: "El teléfono es obligatorio",
                   minLength: { value: 10, message: "Mínimo 10 caracteres" },
                   maxLength: { value: 15, message: "Máximo 15 caracteres" },
                 })}

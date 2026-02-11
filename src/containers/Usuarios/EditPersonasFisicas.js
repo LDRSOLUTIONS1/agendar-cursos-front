@@ -198,7 +198,6 @@ export default function EditPersonasFisicas({
                   defaultValue={users.email}
                   label="Correo electrónico"
                   {...register("email", {
-                    required: "El correo es obligatorio",
                     pattern: {
                       value: /^\S+@\S+$/i,
                       message: "Correo inválido",
@@ -217,7 +216,6 @@ export default function EditPersonasFisicas({
                   defaultValue={users.phone}
                   label="Teléfono"
                   {...register("phone", {
-                    required: "El teléfono es obligatorio",
                     minLength: { value: 10, message: "Mínimo 10 caracteres" },
                     maxLength: { value: 15, message: "Máximo 15 caracteres" },
                   })}
@@ -239,7 +237,7 @@ export default function EditPersonasFisicas({
                     <em>-- Selecciona --</em>
                   </MenuItem>
                   <MenuItem value={1}>Administrador</MenuItem>
-                  <MenuItem value={2}>Instructor</MenuItem> 
+                  <MenuItem value={2}>Instructor</MenuItem>
                   <MenuItem value={3}>Cliente</MenuItem>
                   <MenuItem value={6}>Subadministrador</MenuItem>
                 </TextField>

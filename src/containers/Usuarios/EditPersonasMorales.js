@@ -146,7 +146,6 @@ export default function EditPersonasMorales({
                   defaultValue={users.email}
                   label="Correo electrónico"
                   {...register("email", {
-                    required: "El correo electrónico es obligatorio",
                     pattern: {
                       value: /^\S+@\S+$/i,
                       message: "Correo inválido",
@@ -163,7 +162,6 @@ export default function EditPersonasMorales({
                   defaultValue={users.phone}
                   label="Teléfono"
                   {...register("phone", {
-                    required: "El teléfono es obligatorio",
                     minLength: { value: 10, message: "Mínimo 10 caracteres" },
                     maxLength: { value: 15, message: "Máximo 15 caracteres" },
                   })}
