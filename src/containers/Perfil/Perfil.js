@@ -102,7 +102,7 @@ const Perfil = () => {
                   variant="h6"
                   sx={{ color: "black" }}
                 >
-                  Bienvenido a la Plataforma Integral de Capacitación.
+                  Bienvenido a Training Center.
                 </Typography>
                 <br />
 
