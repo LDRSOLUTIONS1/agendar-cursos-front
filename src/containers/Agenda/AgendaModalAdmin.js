@@ -23,6 +23,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import MethodGet from "../../config/service";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+
 
 export default function AgendaModalAdmin({ open, handleClose, id }) {
   const { clients, GetClients } = useContext(UsuariosContext);
@@ -52,11 +54,61 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
     handleSubmit,
   } = useForm();
 
+  const [values, setValues] = useState([]);
   const [value, setValue] = useState(dayjs());
 
+  const handleDateChange = (newDate) => {
+    setValues((prev) => {
+      const exists = prev.find((d) => dayjs(d).isSame(newDate, "day"));
+
+      if (exists) {
+        return prev.filter((d) => !dayjs(d).isSame(newDate, "day"));
+      } else {
+        return [...prev, newDate];
+      }
+    });
+  };
+
+  const renderWeekPickerDay = (date, selectedDates, pickersDayProps) => {
+    const isSelected = values.some((d) => dayjs(d).isSame(date, "day"));
+
+    return (
+      <PickersDay
+        {...pickersDayProps}
+        selected={isSelected}
+        sx={{
+          ...(isSelected && {
+            backgroundColor: "#1976D2",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#1565C0",
+            },
+          }),
+        }}
+      />
+    );
+  };
+
   const onSubmit = (data) => {
+    if (values.length === 0) return;
+
+    const sortedDates = [...values].sort((a, b) => dayjs(a).diff(dayjs(b)));
+
     data.course_id = id;
-    data.start_date = value.format("YYYY-MM-DD HH:mm:ss");
+
+    const startDate = dayjs(sortedDates[0])
+      .hour(value.hour())
+      .minute(value.minute())
+      .format("YYYY-MM-DD HH:mm:ss");
+
+    const endDate = dayjs(sortedDates[sortedDates.length - 1])
+      .hour(value.hour())
+      .minute(value.minute())
+      .format("YYYY-MM-DD HH:mm:ss");
+
+    data.start_date = startDate;
+    data.end_date = endDate;
+
     data.state_id = state;
     data.municipality_id = municipality;
     AddAgendasAdmin(data);
@@ -110,12 +162,14 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
                   </Typography>
                   <StaticDatePicker
                     displayStaticWrapperAs="desktop"
-                    value={value}
-                    onChange={(newValue) =>
-                      setValue(
-                        newValue.hour(value.hour()).minute(value.minute())
-                      )
-                    }
+                    value={null}
+                    onChange={handleDateChange}
+                    renderDay={renderWeekPickerDay}
+                    // onChange={(newValue) =>
+                    //   setValue(
+                    //     newValue.hour(value.hour()).minute(value.minute()),
+                    //   )
+                    // }
                     // shouldDisableDate={(date) => {
                     //   const today = dayjs();
                     //   const day = date.day();
