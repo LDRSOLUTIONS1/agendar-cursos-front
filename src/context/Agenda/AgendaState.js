@@ -44,7 +44,7 @@ const AgendaState = ({ children }) => {
   const GetAgendasAll = async (
     nombre = "",
     category_id = "",
-    model_id = ""
+    model_id = "",
   ) => {
     try {
       let url = "/courseSchedule/Allindex";
@@ -437,6 +437,100 @@ const AgendaState = ({ children }) => {
     });
   };
 
+  const handleUploadFile = async (id) => {
+    const { value: file } = await Swal.fire({
+      title: "Selecciona el archivo a subir",
+      html: `
+      <style>
+        .swal2-html-container {
+          font-family: 'Poppins', sans-serif;
+          font-size: 14px;
+        }
+
+        .swal2-file {
+          font-family: 'Poppins', sans-serif;
+          margin-top: 10px;
+        }
+      </style>
+
+      <label style="margin-top:10px; display:block; font-weight:500;">
+        Solo archivos .xls, .xlsx o .csv
+      </label>
+
+      <input 
+        type="file" 
+        id="upload-file" 
+        accept=".xls,.xlsx,.csv"
+        class="swal2-file"
+      >
+    `,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Subir archivo",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      focusConfirm: false,
+
+      preConfirm: () => {
+        const selectedFile = document.getElementById("upload-file").files[0];
+
+        if (!selectedFile) {
+          Swal.showValidationMessage("Debes seleccionar un archivo");
+          return false;
+        }
+
+        return selectedFile;
+      },
+    });
+
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+
+      formData.append("file", file);
+
+      const res = await MethodPost(
+        `/reservations/${id}/participants`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      Swal.fire({
+        title: "Archivo subido",
+        text: res.data.message,
+        icon: "success",
+      });
+
+      GetAgendas();
+    } catch (error) {
+      let message = "Ocurrió un error al subir el archivo";
+
+      if (error.response?.data?.message) {
+        message = error.response.data.message;
+      }
+
+      if (error.response?.data?.errors) {
+        const errors = Object.values(error.response.data.errors)
+          .flat()
+          .join("\n");
+
+        message = errors;
+      }
+
+      Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+      });
+    }
+  };
+
   return (
     <AgendaContext.Provider
       value={{
@@ -456,6 +550,7 @@ const AgendaState = ({ children }) => {
         GetAgendasCount,
         GetAgendasAll,
         AddAgendasAdmin,
+        handleUploadFile,
       }}
     >
       {children}

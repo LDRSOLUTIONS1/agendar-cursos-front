@@ -77,11 +77,11 @@ export default function TableModelos({ modelos }) {
         <Table aria-label="tabla de categorias">
           <TableHead>
             <TableRow>
+              <StyledTableCell>Acciones</StyledTableCell>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Marca</StyledTableCell>
-              {/* <StyledTableCell>Nombre de segmento</StyledTableCell> */}
+              <StyledTableCell>Nombre de segmento</StyledTableCell>
               <StyledTableCell>Nombre de unidad</StyledTableCell>
-              <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -97,16 +97,6 @@ export default function TableModelos({ modelos }) {
                     transition={{ duration: 0.3 }}
                     whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                   >
-                    <StyledTableCell data-label="ID">
-                      {modelo.id}
-                    </StyledTableCell>
-                    <StyledTableCell data-label="Marca">Foton</StyledTableCell>
-                    {/* <StyledTableCell data-label="Nombre de segmento">
-                      {modelo.nombre_segmento}
-                    </StyledTableCell> */}
-                    <StyledTableCell data-label="Nombre de unidad">
-                      {modelo.nombre_tipo_unidad}
-                    </StyledTableCell>
                     <StyledTableCell data-label="Acciones">
                       <IconButton
                         size="small"
@@ -136,6 +126,16 @@ export default function TableModelos({ modelos }) {
                           />
                         </Tooltip>
                       </IconButton>
+                    </StyledTableCell>
+                    <StyledTableCell data-label="ID">
+                      {modelo.id}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Marca">Foton</StyledTableCell>
+                    <StyledTableCell data-label="Nombre de segmento">
+                      {modelo.nombre_segmento}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Nombre de unidad">
+                      {modelo.nombre_tipo_unidad}
                     </StyledTableCell>
                   </StyledTableRow>
                 ))

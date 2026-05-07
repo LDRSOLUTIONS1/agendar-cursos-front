@@ -77,6 +77,7 @@ export default function TablePersonasFisicas({ users, categorias }) {
         <Table aria-label="tabla de usuarios">
           <TableHead>
             <TableRow>
+              <StyledTableCell>Acciones</StyledTableCell>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Nombre</StyledTableCell>
               <StyledTableCell>Fecha de nacimiento</StyledTableCell>
@@ -86,7 +87,6 @@ export default function TablePersonasFisicas({ users, categorias }) {
               <StyledTableCell>Teléfono </StyledTableCell>
               <StyledTableCell>NO. colaborador</StyledTableCell>
               <StyledTableCell>Tipo de usuario</StyledTableCell>
-              <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -101,35 +101,6 @@ export default function TablePersonasFisicas({ users, categorias }) {
                   transition={{ duration: 0.3 }}
                   whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                 >
-                  <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
-                  <StyledTableCell data-label="Nombre">
-                    {user.name} {""} {user.first_last_name} {""}
-                    {user.second_last_name}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Fecha de nacimiento">
-                    {new Date(user.birth_date).toISOString().split("T")[0]}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="CURP">
-                    {user.curp}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
-                  <StyledTableCell data-label="Correo electrónico">
-                    {user.email}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Teléfono">
-                    {user.phone}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="NO. colaborador">
-                    {user.collaborator_number || "Sin número de colaborador"}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Tipo de usuario">
-                    {{
-                      1: "Administrador",
-                      2: "Instructor",
-                      3: "Cliente",
-                      6: "Subadministrador",
-                    }[user.type_user] || "Desconocido"}
-                  </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
                     <IconButton
                       size="small"
@@ -160,6 +131,35 @@ export default function TablePersonasFisicas({ users, categorias }) {
                         />
                       </Tooltip>
                     </IconButton>
+                  </StyledTableCell>
+                  <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
+                  <StyledTableCell data-label="Nombre">
+                    {user.name} {""} {user.first_last_name} {""}
+                    {user.second_last_name}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Fecha de nacimiento">
+                    {new Date(user.birth_date).toISOString().split("T")[0]}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="CURP">
+                    {user.curp}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
+                  <StyledTableCell data-label="Correo electrónico">
+                    {user.email}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Teléfono">
+                    {user.phone}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="NO. colaborador">
+                    {user.collaborator_number || "Sin número de colaborador"}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Tipo de usuario">
+                    {{
+                      1: "Administrador",
+                      2: "Instructor",
+                      3: "Cliente",
+                      6: "Subadministrador",
+                    }[user.type_user] || "Desconocido"}
                   </StyledTableCell>
                 </StyledTableRow>
               ))

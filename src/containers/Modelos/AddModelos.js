@@ -84,7 +84,7 @@ export default function AddModelos({ modal, handleClose }) {
       >
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Nombre de segmento"
@@ -96,7 +96,7 @@ export default function AddModelos({ modal, handleClose }) {
                 error={!!errors.nombre_segmento}
                 helperText={errors.nombre_segmento?.message}
               />
-            </Grid> */}
+            </Grid> 
             <Grid item xs={12}>
               <TextField
                 fullWidth

@@ -114,12 +114,25 @@ export default function TableCursos({ agendas }) {
                           }`.trim()
                         : "Sin modelo"}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Fecha  hora solicitada">
-                      {new Date(agenda.start_date).toLocaleString("es-ES", {
-                        dateStyle: "long",
-                        timeStyle: "short",
-                        hour12: true,
-                      })}
+                    <StyledTableCell data-label="Fecha y hora solicitada">
+                      {agenda.start_date &&
+                        new Date(agenda.start_date).toLocaleString("es-ES", {
+                          dateStyle: "long",
+                          timeStyle: "short",
+                          hour12: true,
+                        })}
+
+                      {agenda.end_date && (
+                        <>
+                          {" "}
+                          a{" "}
+                          {new Date(agenda.end_date).toLocaleString("es-ES", {
+                            dateStyle: "long",
+                            timeStyle: "short",
+                            hour12: true,
+                          })}
+                        </>
+                      )}
                     </StyledTableCell>
                     <StyledTableCell data-label="Localidad ">
                       {agenda.state.name} {""}
@@ -160,7 +173,7 @@ export default function TableCursos({ agendas }) {
                       data-label="Estatus"
                       style={{
                         color: getStatusColor(
-                          agenda.reservations?.[0]?.status || 0
+                          agenda.reservations?.[0]?.status || 0,
                         ),
                       }}
                     >

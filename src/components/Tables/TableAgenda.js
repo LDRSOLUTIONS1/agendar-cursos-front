@@ -20,6 +20,7 @@ import AddInstructor from "../../containers/Agenda/AddInstructor";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import EditAgenda from "../../containers/Agenda/EditAgenda";
 import { motion, AnimatePresence } from "framer-motion";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -83,8 +84,13 @@ const getStatusColor = (status) => {
 };
 
 export default function TableAgenda({ agendas }) {
-  const { AcceptAgendation, CanceledAgendation, ClassDone, Reschedule } =
-    useContext(AgendaContext);
+  const {
+    AcceptAgendation,
+    CanceledAgendation,
+    ClassDone,
+    Reschedule,
+    handleUploadFile,
+  } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
 
   const [agenda_id, saveIdInstructor] = useState(null);
@@ -115,6 +121,7 @@ export default function TableAgenda({ agendas }) {
         <Table aria-label="tabla de categorias">
           <TableHead>
             <TableRow>
+              <StyledTableCell>Acciones</StyledTableCell>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Curso</StyledTableCell>
               <StyledTableCell>Fecha y hora solicitada</StyledTableCell>
@@ -122,7 +129,6 @@ export default function TableAgenda({ agendas }) {
               <StyledTableCell>Solicitante</StyledTableCell>
               <StyledTableCell>Instructor</StyledTableCell>
               <StyledTableCell>Estatus</StyledTableCell>
-              <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -137,61 +143,6 @@ export default function TableAgenda({ agendas }) {
                   transition={{ duration: 0.3 }}
                   whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                 >
-                  <StyledTableCell data-label="ID">{agenda.id}</StyledTableCell>
-                  <StyledTableCell data-label="Curso">
-                    {agenda.course?.title}
-                    <br />
-                    {agenda.course?.modality}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Fecha  hora solicitada">
-                    {new Date(agenda.start_date).toLocaleString("es-ES", {
-                      dateStyle: "long",
-                      timeStyle: "short",
-                      hour12: true,
-                    })}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Localidad ">
-                    {agenda.state.name} {""}
-                    {agenda.municipality.name}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Solicitante">
-                    {agenda.reservations?.[0]?.student ? (
-                      <>
-                        {agenda.reservations[0].student.name || ""}{" "}
-                        {agenda.reservations[0].student.first_last_name || ""}{" "}
-                        {agenda.reservations[0].student.second_last_name || ""}{" "}
-                        {agenda.reservations[0].student.razon_social || ""}
-                      </>
-                    ) : (
-                      "Sin Cliente"
-                    )}
-                  </StyledTableCell>
-
-                  <StyledTableCell data-label="Instructor">
-                    {agenda.instructor ? (
-                      `${agenda.instructor.name || ""} ${
-                        agenda.instructor.first_last_name || ""
-                      } ${agenda.instructor.second_last_name || ""}`.trim()
-                    ) : (
-                      <span style={{ color: "red" }}>Sin Instructor</span>
-                    )}
-                  </StyledTableCell>
-
-                  <StyledTableCell
-                    data-label="Estatus"
-                    style={{
-                      color: getStatusColor(
-                        agenda.reservations?.[0]?.status || 0
-                      ),
-                    }}
-                  >
-                    {{
-                      1: "Pendiente de confirmación",
-                      2: "Confirmada",
-                      3: "Cancelada",
-                      4: "Realizada",
-                    }[agenda.reservations?.[0]?.status] || "Desconocido"}
-                  </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
                     <Link to={`/Agenda/${agenda.id}`}>
                       <IconButton size="small">
@@ -315,6 +266,27 @@ export default function TableAgenda({ agendas }) {
                         </>
                       )}
 
+                    {/* clase realizada */}
+                    {agenda.reservations?.[0]?.status === 4 && 
+                      (type_user === "1" || type_user === "2") && (
+                      <>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleUploadFile(agenda.reservations?.[0]?.id)}
+                        >
+                          <Tooltip title="Subir archivo" placement="top">
+                            <FileUploadIcon
+                              sx={{
+                                color: "green",
+                                transition: "0.2s",
+                                "&:hover": { scale: "2" },
+                              }}
+                            />
+                          </Tooltip>
+                        </IconButton>
+                      </>
+                    )}
+
                     {agenda.reservations?.[0]?.status === 2 &&
                       (type_user === "1" || type_user === "2") && (
                         <>
@@ -355,6 +327,75 @@ export default function TableAgenda({ agendas }) {
                           </IconButton>
                         </>
                       )}
+                  </StyledTableCell>
+
+                  <StyledTableCell data-label="ID">{agenda.id}</StyledTableCell>
+                  <StyledTableCell data-label="Curso">
+                    {agenda.course?.title}
+                    <br />
+                    {agenda.course?.modality}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Fecha y hora solicitada">
+                    {agenda.start_date &&
+                      new Date(agenda.start_date).toLocaleString("es-ES", {
+                        dateStyle: "long",
+                        timeStyle: "short",
+                        hour12: true,
+                      })}
+
+                    {agenda.end_date && (
+                      <>
+                        {" "}
+                        a{" "}
+                        {new Date(agenda.end_date).toLocaleString("es-ES", {
+                          dateStyle: "long",
+                          timeStyle: "short",
+                          hour12: true,
+                        })}
+                      </>
+                    )}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Localidad ">
+                    {agenda.state.name} {""}
+                    {agenda.municipality.name}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Solicitante">
+                    {agenda.reservations?.[0]?.student ? (
+                      <>
+                        {agenda.reservations[0].student.name || ""}{" "}
+                        {agenda.reservations[0].student.first_last_name || ""}{" "}
+                        {agenda.reservations[0].student.second_last_name || ""}{" "}
+                        {agenda.reservations[0].student.razon_social || ""}
+                      </>
+                    ) : (
+                      "Sin Cliente"
+                    )}
+                  </StyledTableCell>
+
+                  <StyledTableCell data-label="Instructor">
+                    {agenda.instructor ? (
+                      `${agenda.instructor.name || ""} ${
+                        agenda.instructor.first_last_name || ""
+                      } ${agenda.instructor.second_last_name || ""}`.trim()
+                    ) : (
+                      <span style={{ color: "red" }}>Sin Instructor</span>
+                    )}
+                  </StyledTableCell>
+
+                  <StyledTableCell
+                    data-label="Estatus"
+                    style={{
+                      color: getStatusColor(
+                        agenda.reservations?.[0]?.status || 0,
+                      ),
+                    }}
+                  >
+                    {{
+                      1: "Pendiente de confirmación",
+                      2: "Confirmada",
+                      3: "Cancelada",
+                      4: "Realizada",
+                    }[agenda.reservations?.[0]?.status] || "Desconocido"}
                   </StyledTableCell>
                 </StyledTableRow>
               ))

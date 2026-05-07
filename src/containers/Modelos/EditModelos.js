@@ -51,7 +51,7 @@ export default function EditModelos({ open, handleClose, id }) {
         <DialogContent>
           {modelo && (
             <Grid container spacing={2}>
-              {/* <Grid item xs={12}>
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   defaultValue={modelo.nombre_segmento}
@@ -64,7 +64,7 @@ export default function EditModelos({ open, handleClose, id }) {
                   error={!!errors.nombre_segmento}
                   helperText={errors.nombre_segmento?.message}
                 />
-              </Grid> */}
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth

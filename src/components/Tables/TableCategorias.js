@@ -59,7 +59,7 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TableCategorias({ categorias }) {  
+export default function TableCategorias({ categorias }) {
   const { DeleteCategorias } = useContext(CategoriasContext);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
@@ -77,10 +77,10 @@ export default function TableCategorias({ categorias }) {
         <Table aria-label="tabla de categorias">
           <TableHead>
             <TableRow>
+              <StyledTableCell>Acciones</StyledTableCell>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Nombre</StyledTableCell>
               <StyledTableCell>Descripción</StyledTableCell>
-              <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,15 +96,6 @@ export default function TableCategorias({ categorias }) {
                     transition={{ duration: 0.3 }}
                     whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                   >
-                    <StyledTableCell data-label="ID">
-                      {categoria.id}
-                    </StyledTableCell>
-                    <StyledTableCell data-label="Nombre">
-                      {categoria.name}
-                    </StyledTableCell>
-                    <StyledTableCell data-label="Descripción">
-                      {categoria.description}
-                    </StyledTableCell>
                     <StyledTableCell data-label="Acciones">
                       <IconButton
                         size="small"
@@ -134,6 +125,15 @@ export default function TableCategorias({ categorias }) {
                           />
                         </Tooltip>
                       </IconButton>
+                    </StyledTableCell>
+                    <StyledTableCell data-label="ID">
+                      {categoria.id}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Nombre">
+                      {categoria.name}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Descripción">
+                      {categoria.description}
                     </StyledTableCell>
                   </StyledTableRow>
                 ))

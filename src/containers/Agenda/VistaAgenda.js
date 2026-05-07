@@ -16,6 +16,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
+import TableAlumnos from "../../components/Tables/TableAlumnos";
 
 export default function VistaAgenda(props) {
   const history = useHistory();
@@ -41,6 +42,10 @@ export default function VistaAgenda(props) {
     4: "Reservación Realizada",
   };
 
+  const start = agenda.start_date ? new Date(agenda.start_date) : null;
+  const end = agenda.end_date ? new Date(agenda.end_date) : null;
+  const alumnos = agenda.reservations?.[0]?.participants || [];
+  
   const InfoItem = ({ icon: Icon, label, value, color = "primary.main" }) => (
     <Box sx={{ mb: 2, display: "flex", alignItems: "flex-start" }}>
       <Icon fontSize="small" sx={{ mr: 1, mt: "3px", color }} />
@@ -164,14 +169,27 @@ export default function VistaAgenda(props) {
               <InfoItem
                 icon={EventIcon}
                 label="Fecha solicitada:"
-                value={`${new Date(
-                  agenda.start_date
-                ).toLocaleDateString()} ${new Date(
-                  agenda.start_date
-                ).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}`}
+                value={
+                  start
+                    ? `${start.toLocaleDateString("es-ES", {
+                        dateStyle: "long",
+                      })} ${start.toLocaleTimeString("es-ES", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}${
+                        end
+                          ? ` a ${end.toLocaleDateString("es-ES", {
+                              dateStyle: "long",
+                            })} ${end.toLocaleTimeString("es-ES", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}`
+                          : ""
+                      }`
+                    : null
+                }
               />
 
               <InfoItem
@@ -196,9 +214,9 @@ export default function VistaAgenda(props) {
                 icon={AccessTimeIcon}
                 label="Registro:"
                 value={`${new Date(
-                  agenda.created_at
+                  agenda.created_at,
                 ).toLocaleDateString()} ${new Date(
-                  agenda.created_at
+                  agenda.created_at,
                 ).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -248,6 +266,10 @@ export default function VistaAgenda(props) {
               )}
             </Paper>
           </motion.div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TableAlumnos alumnos={alumnos} />
         </Grid>
 
         <Grid item xs={12}>

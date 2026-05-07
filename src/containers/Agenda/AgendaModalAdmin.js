@@ -25,16 +25,23 @@ import MethodGet from "../../config/service";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 
-
 export default function AgendaModalAdmin({ open, handleClose, id }) {
   const { clients, GetClients } = useContext(UsuariosContext);
   const { AddAgendasAdmin } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
   const [fechas, setFechas] = useState([]);
+  const [distribuidores, setDistribuidores] = useState([]);
+  const [tipoUsuario, setTipoUsuario] = useState("");
 
   useEffect(() => {
     MethodGet("/course-schedules/dates")
       .then((res) => setFechas(res.data))
+      .catch(console.log);
+  }, []);
+
+  useEffect(() => {
+    MethodGet("https://apiclientes.ldrhumanresources.com/api/distribuidores")
+      .then((res) => setDistribuidores(res.data))
       .catch(console.log);
   }, []);
 
@@ -225,26 +232,73 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona el nombre del cliente"
-                defaultValue=""
-                {...register("student_id", {
-                  required: "Debes seleccionar el nombre del cliente",
+                label="¿Qué tipo deseas seleccionar?"
+                value={tipoUsuario}
+                {...register("tipoUsuario", {
+                  required: "Debes seleccionar una opción",
                 })}
-                error={!!errors.student_id}
-                helperText={errors.student_id?.message}
+                error={!!errors.tipoUsuario}
+                helperText={errors.tipoUsuario?.message}
+                onChange={(e) => setTipoUsuario(e.target.value)}
               >
                 <MenuItem value="">
-                  <em>-- Selecciona un nombre --</em>
+                  <em>-- Selecciona una opción --</em>
                 </MenuItem>
-                {clients.map((client) => (
-                  <MenuItem key={client.id} value={client.id}>
-                    {client.name} {client.first_last_name}{" "}
-                    {client.second_last_name}
-                    {client.razon_social}
-                  </MenuItem>
-                ))}
+                <MenuItem value="cliente">Cliente</MenuItem>
+                <MenuItem value="distribuidor">Distribuidor</MenuItem>
               </TextField>
             </Grid>
+            {tipoUsuario === "distribuidor" && (
+              <Grid item xs={12}>
+                <TextField
+                  select
+                  fullWidth
+                  label="Selecciona al distribuidor"
+                  defaultValue=""
+                  {...register("distribuidor_id", {
+                    required: "Debes seleccionar un distribuidor",
+                  })}
+                  error={!!errors.distribuidor_id}
+                  helperText={errors.distribuidor_id?.message}
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona un distribuidor --</em>
+                  </MenuItem>
+                  {distribuidores.map((distribuidor) => (
+                    <MenuItem key={distribuidor.id} value={distribuidor.id}>
+                      {distribuidor.nombre_comercial} {distribuidor.razon_social}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            )}
+
+            {tipoUsuario === "cliente" && (
+              <Grid item xs={12}>
+                <TextField
+                  select
+                  fullWidth
+                  label="Selecciona al cliente"
+                  defaultValue=""
+                  {...register("student_id", {
+                    required: "Debes seleccionar un cliente",
+                  })}
+                  error={!!errors.student_id}
+                  helperText={errors.student_id?.message}
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona un cliente --</em>
+                  </MenuItem>
+                  {clients.map((client) => (
+                    <MenuItem key={client.id} value={client.id}>
+                      {client.name} {client.first_last_name}{" "}
+                      {client.second_last_name}
+                      {client.razon_social}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <SelectState detectarCambiosState={detectarCambiosState} />
             </Grid>

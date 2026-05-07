@@ -77,6 +77,7 @@ export default function TablePersonasMorales({ users, categorias }) {
         <Table aria-label="tabla de usuarios">
           <TableHead>
             <TableRow>
+              <StyledTableCell>Acciones</StyledTableCell>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Razón social</StyledTableCell>
               <StyledTableCell>RFC</StyledTableCell>
@@ -86,7 +87,6 @@ export default function TablePersonasMorales({ users, categorias }) {
               <StyledTableCell>Teléfono </StyledTableCell>
               <StyledTableCell>NO. colaborador</StyledTableCell>
               <StyledTableCell>Tipo de usuario</StyledTableCell>
-              <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -101,34 +101,6 @@ export default function TablePersonasMorales({ users, categorias }) {
                   transition={{ duration: 0.3 }}
                   whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                 >
-                  <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
-                  <StyledTableCell data-label="Razon social">
-                    {user.razon_social}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
-                  <StyledTableCell data-label="Representante legal">
-                    {user.representante_legal}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Domicilio fiscal">
-                    {user.domicilio_fiscal}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Correo electrónico">
-                    {user.email}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Teléfono">
-                    {user.phone}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="NO. colaborador">
-                    {user.collaborator_number}
-                  </StyledTableCell>
-                  <StyledTableCell data-label="Tipo de usuario">
-                    {{
-                      1: "Administrador",
-                      2: "Instructor",
-                      3: "Cliente",
-                    }[user.type_user] || "Desconocido"}
-                  </StyledTableCell>
-
                   <StyledTableCell data-label="Acciones">
                     <IconButton
                       size="small"
@@ -158,6 +130,33 @@ export default function TablePersonasMorales({ users, categorias }) {
                         />
                       </Tooltip>
                     </IconButton>
+                  </StyledTableCell>
+                  <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
+                  <StyledTableCell data-label="Razon social">
+                    {user.razon_social}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
+                  <StyledTableCell data-label="Representante legal">
+                    {user.representante_legal}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Domicilio fiscal">
+                    {user.domicilio_fiscal}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Correo electrónico">
+                    {user.email}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Teléfono">
+                    {user.phone}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="NO. colaborador">
+                    {user.collaborator_number}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Tipo de usuario">
+                    {{
+                      1: "Administrador",
+                      2: "Instructor",
+                      3: "Cliente",
+                    }[user.type_user] || "Desconocido"}
                   </StyledTableCell>
                 </StyledTableRow>
               ))
