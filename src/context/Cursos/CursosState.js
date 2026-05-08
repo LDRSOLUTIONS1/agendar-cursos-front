@@ -60,9 +60,7 @@ const CursosState = ({ children }) => {
 
       let url = "/course";
 
-      if (type_user === "1") {
-        url = `/courses/user/${user_id}`;
-      } else if (type_user === "2") {
+     if (type_user === "2") {
         url = `/indexTypeUserCourse/${user_id}`;
       }
 

@@ -51,15 +51,7 @@ const CategoriasState = ({ children }) => {
 
   const GetCategories = async () => {
     try {
-      const type_user = localStorage.getItem("type_user");
-      const user_id = localStorage.getItem("user_id");
-
       let url = "/categories";
-
-      if (type_user === "1") {
-        url = `/categories/user/${user_id}`;
-      }
-
       const res = await MethodGet(url);
       dispatch({ type: GET_ALL_CATEGORIAS, payload: res.data });
     } catch (error) {

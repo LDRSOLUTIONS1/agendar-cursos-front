@@ -51,15 +51,7 @@ const ModelosState = ({ children }) => {
 
   const GetModelos = async () => {
     try {
-      const type_user = localStorage.getItem("type_user");
-      const user_id = localStorage.getItem("user_id");
-
       let url = "/modelos";
-
-      if (type_user === "1") {
-        url = `/models/user/${user_id}`;
-      }
-
       const res = await MethodGet(url);
       dispatch({ type: GET_ALL_MODELOS, payload: res.data });
     } catch (error) {

@@ -19,9 +19,7 @@ const CalendarioState = ({ children }) => {
 
       let url = "/course-schedules/dates";
 
-      if (type_user === "1") {
-        url = `course-schedules/dates/admin/${user_id}`;
-      } else if (type_user === "2" || type_user === "3" || type_user === "7") {
+      if (type_user === "2" || type_user === "3" || type_user === "7") {
         url = `/course-schedules/dates/${user_id}`;
       }
 

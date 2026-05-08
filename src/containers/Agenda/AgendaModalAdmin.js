@@ -32,6 +32,8 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
   const [fechas, setFechas] = useState([]);
   const [distribuidores, setDistribuidores] = useState([]);
   const [tipoUsuario, setTipoUsuario] = useState("");
+  const [distribuidorSeleccionado, setDistribuidorSeleccionado] =
+    useState(null);
 
   useEffect(() => {
     MethodGet("/course-schedules/dates")
@@ -118,6 +120,10 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
 
     data.state_id = state;
     data.municipality_id = municipality;
+    if (tipoUsuario === "distribuidor" && distribuidorSeleccionado) {
+      data.name = distribuidorSeleccionado.nombre_comercial;
+      data.razon_social = distribuidorSeleccionado.razon_social;
+    }
     AddAgendasAdmin(data);
     handleClose();
   };
@@ -260,13 +266,22 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
                   })}
                   error={!!errors.distribuidor_id}
                   helperText={errors.distribuidor_id?.message}
+                  onChange={(e) => {
+                    const distribuidor = distribuidores.find(
+                      (d) => d.id == e.target.value,
+                    );
+
+                    setDistribuidorSeleccionado(distribuidor);
+                  }}
                 >
                   <MenuItem value="">
                     <em>-- Selecciona un distribuidor --</em>
                   </MenuItem>
+
                   {distribuidores.map((distribuidor) => (
                     <MenuItem key={distribuidor.id} value={distribuidor.id}>
-                      {distribuidor.nombre_comercial} {distribuidor.razon_social}
+                      {distribuidor.nombre_comercial}{" "}
+                      {distribuidor.razon_social}
                     </MenuItem>
                   ))}
                 </TextField>

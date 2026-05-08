@@ -30,9 +30,6 @@ const AgendaState = ({ children }) => {
       const user_id = localStorage.getItem("user_id");
 
       let url = `/indexTypeUserAgenda/${user_id}`;
-      if (type_user === "1") {
-        url = `/courseSchedule/TypeUser/${user_id}`;
-      }
 
       const res = await MethodGet(url);
       dispatch({ type: GET_ALL_AGENDAS, payload: res.data });
@@ -73,9 +70,6 @@ const AgendaState = ({ children }) => {
       const user_id = localStorage.getItem("user_id");
 
       let url = `/indexTypeUserAgendaCount/${user_id}`;
-      if (type_user === "1") {
-        url = `/indexCount/${user_id}`;
-      }
 
       const res = await MethodGet(url);
       dispatch({ type: GET_ALL_AGENDAS_COUNT, payload: res.data });
